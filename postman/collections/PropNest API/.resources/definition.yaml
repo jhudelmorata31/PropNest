@@ -1,14 +1,31 @@
 $kind: collection
 description: CRUD and role access requests for the PropNest ITEC 116 backend. Register/login first; paste accessToken into token. Use an Admin token for user/category administration, an Agent token for listing/image operations, and a Client token for inquiries.
 variables:
-  baseUrl: http://localhost:3000/api/v1
-  token: ""
-  propertyId: "1"
-  categoryId: "1"
-  inquiryId: "1"
-  imageId: "1"
-  userId: "1"
+  - key: baseUrl
+    value: http://localhost:3000/api/v1
+    disabled: false
+  - key: categoryId
+    value: "1"
+    disabled: false
+  - key: inquiryId
+    value: "1"
+    disabled: false
+  - key: imageId
+    value: "1"
+    disabled: false
+  - key: userId
+    value: "1"
+    disabled: false
+  - key: json_web_token_0mqb
+    secret: true
+    disabled: false
+  - key: json_web_token_0mqb
+    secret: true
+    disabled: false
+  - key: token
+    value: ""
+    disabled: false
 auth:
   type: bearer
   credentials:
-    token: ""
+    token: "{{json_web_token_0mqb}}"

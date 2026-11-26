@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/users/{{userId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"fullName":"Updated Name"}'
+order: 4000

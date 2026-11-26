@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "client@example.com",
+      "password": "StrongPass123"
+    }
+auth:
+  type: noauth
+order: 2000

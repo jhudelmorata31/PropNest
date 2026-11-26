@@ -1,0 +1,5 @@
+$kind: http-request
+name: List My / Related Inquiries
+url: "{{baseUrl}}/inquiries"
+method: GET
+order: 2000

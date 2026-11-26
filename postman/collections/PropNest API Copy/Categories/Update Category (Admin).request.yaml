@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/categories/{{categoryId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"categoryName":"Townhouse Homes"}'
+order: 4000

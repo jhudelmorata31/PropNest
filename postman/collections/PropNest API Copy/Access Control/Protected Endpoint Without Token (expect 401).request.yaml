@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{baseUrl}}/properties"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"categoryId":1,"title":"Example Home","location":"Manila","price":1000000}'
+auth:
+  type: noauth
+order: 1000

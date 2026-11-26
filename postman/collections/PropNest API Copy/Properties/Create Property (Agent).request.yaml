@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/properties"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"categoryId":{{categoryId}},"title":"Two Bedroom Home","location":"Quezon City","price":4500000,"status":"Available"}'
+order: 1000

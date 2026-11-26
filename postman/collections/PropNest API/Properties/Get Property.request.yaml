@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:3000/api/v1/properties
+url: "{{baseUrl}}/properties/{{propertyId}}"
 method: GET
 auth:
   type: noauth

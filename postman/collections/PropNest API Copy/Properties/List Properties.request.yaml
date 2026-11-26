@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/properties?location=Quezon&categoryId={{categoryId}}&status=Available"
+method: GET
+queryParams:
+  location: Quezon
+  categoryId: "{{categoryId}}"
+  status: Available
+auth:
+  type: noauth
+order: 2000

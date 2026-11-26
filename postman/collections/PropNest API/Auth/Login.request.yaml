@@ -7,8 +7,8 @@ body:
   type: text
   content: |-
     {
-      "email": "client@example.com",
-      "password": "StrongPass123"
+      "email": "jhudelpogi23@gmail.com",
+      "password": "123asawanimarie"
     }
 auth:
   type: noauth

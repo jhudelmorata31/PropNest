@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/inquiries/{{inquiryId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"message":"Updated inquiry message"}'
+order: 4000
