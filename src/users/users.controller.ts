@@ -1,0 +1,7 @@
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common'; import { IsEmail, IsEnum, IsOptional, IsString, MinLength, MaxLength } from 'class-validator'; import { AuthGuard } from '@nestjs/passport'; import { RolesGuard } from '../auth/roles.guard'; import { Roles } from '../auth/roles.decorator'; import { UserRole } from './user.entity'; import { UsersService } from './users.service';
+class UserDto { @IsString() @MinLength(2) @MaxLength(120) fullName: string; @IsEmail() email: string; @IsString() @MinLength(8) @MaxLength(72) password: string; @IsOptional() @IsEnum(UserRole) role?: UserRole; }
+class UserPatchDto { @IsOptional() @IsString() @MinLength(2) fullName?: string; @IsOptional() @IsEmail() email?: string; @IsOptional() @IsString() @MinLength(8) @MaxLength(72) password?: string; @IsOptional() @IsEnum(UserRole) role?: UserRole; }
+@Controller('users') @UseGuards(AuthGuard('jwt'), RolesGuard) @Roles(UserRole.ADMIN) export class UsersController {
+ constructor(private service: UsersService) {}
+ @Post() create(@Body() d: UserDto) { return this.service.create(d); } @Get() all() { return this.service.all(); } @Get(':id') one(@Param('id', ParseIntPipe) id: number) { return this.service.one(id); } @Patch(':id') update(@Param('id', ParseIntPipe) id: number, @Body() d: UserPatchDto) { return this.service.update(id, d); } @Delete(':id') remove(@Param('id', ParseIntPipe) id: number) { return this.service.remove(id); }
+}

@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/images/{{imageId}}"
+method: DELETE
+order: 4000

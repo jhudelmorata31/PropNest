@@ -1,0 +1,2 @@
+import { Module } from '@nestjs/common'; import { TypeOrmModule } from '@nestjs/typeorm'; import { PropertyImage } from './property-image.entity'; import { Property } from '../properties/property.entity'; import { ImagesService } from './images.service'; import { ImagesController } from './images.controller'; import { RolesGuard } from '../auth/roles.guard';
+@Module({ imports: [TypeOrmModule.forFeature([PropertyImage, Property])], providers: [ImagesService, RolesGuard], controllers: [ImagesController] }) export class ImagesModule {}

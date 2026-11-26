@@ -1,0 +1,49 @@
+{
+  "info": { "name": "PropNest API", "description": "CRUD and role access requests for the PropNest ITEC 116 backend. Register/login first; paste accessToken into token. Use an Admin token for user/category administration, an Agent token for listing/image operations, and a Client token for inquiries.", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+  "variable": [{"key":"baseUrl","value":"http://localhost:3000/api/v1"},{"key":"token","value":""},{"key":"propertyId","value":"1"},{"key":"categoryId","value":"1"},{"key":"inquiryId","value":"1"},{"key":"imageId","value":"1"},{"key":"userId","value":"1"}],
+  "item": [
+    {"name":"Auth","item":[
+      {"name":"Register Client","request":{"auth":{"type":"noauth"},"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"fullName\": \"Jamie Client\",\n  \"email\": \"client@example.com\",\n  \"password\": \"StrongPass123\"\n}"},"url":"{{baseUrl}}/auth/register"}},
+      {"name":"Login","request":{"auth":{"type":"noauth"},"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"email\": \"client@example.com\",\n  \"password\": \"StrongPass123\"\n}"},"url":"{{baseUrl}}/auth/login"}}
+    ]},
+    {"name":"Users (Admin)","item":[
+      {"name":"Create Agent","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"fullName\":\"Alex Agent\",\"email\":\"agent@example.com\",\"password\":\"StrongPass123\",\"role\":\"Agent\"}"},"url":"{{baseUrl}}/users"}},
+      {"name":"List Users","request":{"method":"GET","url":"{{baseUrl}}/users"}},
+      {"name":"Get User","request":{"method":"GET","url":"{{baseUrl}}/users/{{userId}}"}},
+      {"name":"Update User","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"fullName\":\"Updated Name\"}"},"url":"{{baseUrl}}/users/{{userId}}"}},
+      {"name":"Delete User","request":{"method":"DELETE","url":"{{baseUrl}}/users/{{userId}}"}}
+    ]},
+    {"name":"Categories","item":[
+      {"name":"Create Category (Admin)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"categoryName\":\"Townhouse\"}"},"url":"{{baseUrl}}/categories"}},
+      {"name":"List Categories","request":{"auth":{"type":"noauth"},"method":"GET","url":"{{baseUrl}}/categories"}},
+      {"name":"Get Category","request":{"auth":{"type":"noauth"},"method":"GET","url":"{{baseUrl}}/categories/{{categoryId}}"}},
+      {"name":"Update Category (Admin)","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"categoryName\":\"Townhouse Homes\"}"},"url":"{{baseUrl}}/categories/{{categoryId}}"}},
+      {"name":"Delete Category (Admin)","request":{"method":"DELETE","url":"{{baseUrl}}/categories/{{categoryId}}"}}
+    ]},
+    {"name":"Properties","item":[
+      {"name":"Create Property (Agent)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"categoryId\":{{categoryId}},\"title\":\"Two Bedroom Home\",\"location\":\"Quezon City\",\"price\":4500000,\"status\":\"Available\"}"},"url":"{{baseUrl}}/properties"}},
+      {"name":"List Properties","request":{"auth":{"type":"noauth"},"method":"GET","url":{"raw":"{{baseUrl}}/properties?location=Quezon&categoryId={{categoryId}}&status=Available","host":["{{baseUrl}}"],"path":["properties"],"query":[{"key":"location","value":"Quezon"},{"key":"categoryId","value":"{{categoryId}}"},{"key":"status","value":"Available"}]} }},
+      {"name":"Get Property","request":{"auth":{"type":"noauth"},"method":"GET","url":"{{baseUrl}}/properties/{{propertyId}}"}},
+      {"name":"Update Property (Owner Agent)","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"price\":4600000}"},"url":"{{baseUrl}}/properties/{{propertyId}}"}},
+      {"name":"Delete Property (Owner Agent)","request":{"method":"DELETE","url":"{{baseUrl}}/properties/{{propertyId}}"}}
+    ]},
+    {"name":"Inquiries","item":[
+      {"name":"Create Inquiry (Client)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"propertyId\":{{propertyId}},\"message\":\"I would like to schedule a viewing.\"}"},"url":"{{baseUrl}}/inquiries"}},
+      {"name":"List My / Related Inquiries","request":{"method":"GET","url":"{{baseUrl}}/inquiries"}},
+      {"name":"Get Inquiry","request":{"method":"GET","url":"{{baseUrl}}/inquiries/{{inquiryId}}"}},
+      {"name":"Update Inquiry (Admin)","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"message\":\"Updated inquiry message\"}"},"url":"{{baseUrl}}/inquiries/{{inquiryId}}"}},
+      {"name":"Delete Inquiry (Owner Client/Admin)","request":{"method":"DELETE","url":"{{baseUrl}}/inquiries/{{inquiryId}}"}}
+    ]},
+    {"name":"Property Images","item":[
+      {"name":"List Property Images","request":{"auth":{"type":"noauth"},"method":"GET","url":"{{baseUrl}}/properties/{{propertyId}}/images"}},
+      {"name":"Add Property Image (Owner Agent)","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"imageUrl\":\"https://example.com/property.jpg\"}"},"url":"{{baseUrl}}/properties/{{propertyId}}/images"}},
+      {"name":"Update Image (Owner Agent)","request":{"method":"PATCH","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"imageUrl\":\"https://example.com/property-updated.jpg\"}"},"url":"{{baseUrl}}/images/{{imageId}}"}},
+      {"name":"Delete Image (Owner Agent)","request":{"method":"DELETE","url":"{{baseUrl}}/images/{{imageId}}"}}
+    ]},
+    {"name":"Access Control","item":[
+      {"name":"Protected Endpoint Without Token (expect 401)","request":{"auth":{"type":"noauth"},"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"categoryId\":1,\"title\":\"Example Home\",\"location\":\"Manila\",\"price\":1000000}"},"url":"{{baseUrl}}/properties"}},
+      {"name":"Admin Route as Client (expect 403)","request":{"method":"GET","url":"{{baseUrl}}/users"}}
+    ]}
+  ]
+}

@@ -1,0 +1,2 @@
+import { Module } from '@nestjs/common'; import { TypeOrmModule } from '@nestjs/typeorm'; import { Inquiry } from './inquiry.entity'; import { Property } from '../properties/property.entity'; import { InquiriesService } from './inquiries.service'; import { InquiriesController } from './inquiries.controller'; import { RolesGuard } from '../auth/roles.guard';
+@Module({ imports: [TypeOrmModule.forFeature([Inquiry, Property])], providers: [InquiriesService, RolesGuard], controllers: [InquiriesController] }) export class InquiriesModule {}

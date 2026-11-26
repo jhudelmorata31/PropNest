@@ -1,0 +1,13 @@
+# Use this workspace to collaborate
+workspace:
+  id: bc9db691-5cba-4094-87ca-84396e8fe2c2
+
+cloudResources:
+  collections:
+    ../postman/collections/PropNest API: 05341f7f-fdff-4452-bb00-efe7e6c64dbd
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

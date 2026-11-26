@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/properties/{{propertyId}}/images"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"imageUrl":"https://example.com/property.jpg"}'
+order: 2000

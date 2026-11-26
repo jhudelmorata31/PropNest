@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/inquiries"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"propertyId":{{propertyId}},"message":"I would like to schedule a viewing."}'
+order: 1000

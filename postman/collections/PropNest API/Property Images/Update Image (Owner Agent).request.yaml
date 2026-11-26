@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/images/{{imageId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"imageUrl":"https://example.com/property-updated.jpg"}'
+order: 3000

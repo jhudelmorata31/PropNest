@@ -1,0 +1,10 @@
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common'; import { InjectRepository } from '@nestjs/typeorm'; import { QueryFailedError, Repository } from 'typeorm'; import * as bcrypt from 'bcrypt'; import { User, UserRole } from './user.entity';
+@Injectable() export class UsersService {
+ constructor(@InjectRepository(User) private repo: Repository<User>) {}
+ private safe(u: User) { const { Password, ...safe } = u as any; return safe; }
+ async all() { return (await this.repo.find()).map(u => this.safe(u)); }
+ async one(id: number) { const u = await this.repo.findOne({ where: { UserID: id } }); if (!u) throw new NotFoundException('User not found'); return this.safe(u); }
+ async create(d: any) { const Email = d.email.trim().toLowerCase(); if (await this.repo.findOne({ where: { Email } })) throw new ConflictException('Email is already registered'); const u = await this.repo.save(this.repo.create({ FullName: d.fullName, Email, Password: await bcrypt.hash(d.password, 12), Role: d.role || UserRole.CLIENT })); return this.safe(u); }
+ async update(id: number, d: any) { const u = await this.repo.findOne({ where: { UserID: id } }); if (!u) throw new NotFoundException('User not found'); if (d.email) { const found = await this.repo.findOne({ where: { Email: d.email.toLowerCase() } }); if (found && found.UserID !== id) throw new ConflictException('Email is already registered'); u.Email = d.email.toLowerCase(); } if (d.fullName !== undefined) u.FullName = d.fullName; if (d.role) u.Role = d.role; if (d.password) u.Password = await bcrypt.hash(d.password, 12); return this.safe(await this.repo.save(u)); }
+ async remove(id: number) { const u = await this.repo.findOne({ where: { UserID: id } }); if (!u) throw new NotFoundException('User not found'); try { await this.repo.remove(u); } catch (e) { if (e instanceof QueryFailedError) throw new ConflictException('User owns one or more properties and cannot be deleted'); throw e; } return { message: 'User deleted' }; }
+}
